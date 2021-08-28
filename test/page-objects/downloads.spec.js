@@ -15,7 +15,7 @@ class DownloadPage extends Page {
 		await this.linuxButton.waitForDisplayed({timeout: 30000});
 		await this.linuxButton.click();
 		await this.versionSelectionDropdown.click();
-		return await $$('.dropdown-scroll.ps-container.ps-theme-default.ps-active-y div.option').map( async(result) => {
+		return await $$('.dropdown-scroll.ps-container.ps-theme-default.ps-active-y div.option').map( async (result) => {
 			return result.getText();
 		});
 	}
