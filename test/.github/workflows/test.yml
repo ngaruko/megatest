@@ -1,0 +1,35 @@
+name: Mega E2E test
+
+on: push
+
+env:
+  MEGA_URL: ${{ secrets.TEST_URL }}
+  MEGA_USER: ${{ secrets.USERNAME }}
+  MEGA_PASS: ${{ secrets.PASSWORD }}
+
+jobs:
+
+  wdio-tests:
+    name: wdio tests
+    runs-on: ubuntu-18.04
+
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    steps:
+
+    - name: npm CI
+      run: npm ci
+
+    - name: Test it!
+      run: node --stack_size=10000 npm test
+    - name: Archive Results
+      uses: actions/upload-artifact@v2
+      with:
+        name: WDIO Results Artifact ${{ matrix.node-version }}
+        path: |
+          allure-results
+          allure-report
+          tests/logs
+      if: ${{ failure() }}
