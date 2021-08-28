@@ -25,5 +25,19 @@ describe('File Management Tests', () => {
 		await FileManager.confirmButton.click();
 		await browser.pause(10000);
 
+	});
+
+	it('should restore file from rubbish bin', async () => {
+		await FileManagerPage.rubbishBinButton.click();
+		await FileManagerPage.fileContextMenu.click();
+		await FileManagerPage.restoreButton.click();
+
+		await browser.pause(10000);
+
+		await FileManagerPage.cloudDriveLink.click();
+		await browser.pause(5000);
+		const fileName=await $(`[title="${file}"]`);
+		expect(await fileName.isExisting()).to.be.true;
+
 	});	
 });
