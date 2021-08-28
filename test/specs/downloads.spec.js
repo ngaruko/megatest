@@ -1,8 +1,8 @@
-const LoginPage = require('../pageobjects/login.page');
-const FileManagerPage = require('../pageobjects/file-manager.page');
-const DownloadPage = require('../pageobjects/download.page');
-var chai = require('chai');
-const constants = require('../constants');
+const LoginPage=require('../page-objects/login.page');
+const FileManagerPage=require('../page-objects/file-manager.page');
+const DownloadPage=require('../page-objects/downloads.page');
+var chai=require('chai');
+const constants=require('../constants');
 chai.use(require('chai-string'));
 
 describe('Distros Downloads Tests', () => {

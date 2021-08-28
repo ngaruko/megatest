@@ -1,4 +1,4 @@
-const constants = require('./constants');
+const constants = require('./test/constants');
 const allure = require('allure-commandline');
 const LoginPage = require('./test/page-objects/login.page');
 

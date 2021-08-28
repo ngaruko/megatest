@@ -1,6 +1,6 @@
-const LoginPage = require('../pageobjects/login.page');
-const FileManagerPage = require('../pageobjects/file-manager.page');
-var chai = require('chai');
+const LoginPage=require('../page-objects/login.page');
+const FileManagerPage=require('../page-objects/file-manager.page');
+var chai=require('chai');
 chai.use(require('chai-string'));
 const file='a.txt'
 
@@ -39,5 +39,5 @@ describe('File Management Tests', () => {
 		const fileName=await $(`[title="${file}"]`);
 		expect(await fileName.isExisting()).to.be.true;
 
-	});	
+	});
 });
