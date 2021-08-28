@@ -17,4 +17,13 @@ describe('File Management Tests', () => {
 		await browser.pause(10000);;
 	});
 
+	it('should delete the file', async () => {
+		await browser.pause(20000);
+		await FileManagerPage.fileSettingsIcon.click();
+		await browser.pause(5000);
+		await FileManager.removeButton.click();
+		await FileManager.confirmButton.click();
+		await browser.pause(10000);
+
+	});	
 });
