@@ -40,18 +40,9 @@ describe('File Management Tests', () => {
 		await FileManagerPage.rubbishBinButton.click();
 		await $('.time.ad').waitForDisplayed();
 		await $('.time.ad').click();
-		await browser.pause(5000);
 		await FileManagerPage.fileContextMenu.click();
-		await browser.pause(5000);
-		try {
-			await FileManagerPage.restoreButton.click();
-		} catch (error) {
-			console.log(error);
-			await $('a.dropdown-item.move-item.contains-submenu.sprite-fm-mono-after.icon-arrow-right-after').click();
-			await $('button.mega-button.positive.dialog-picker-button.active').click();
-		}
+		await FileManagerPage.restoreButton.click();
 
-		await browser.pause(5000);
 		const emptyBinMessage = await FileManagerPage.emptyBinMessage.getText();
 		expect(await emptyBinMessage).to.equal('Empty Cloud Drive');
 		await FileManagerPage.cloudDriveLink.waitForDisplayed();
