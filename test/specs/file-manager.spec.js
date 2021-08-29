@@ -1,40 +1,61 @@
 const LoginPage=require('../page-objects/login.page');
 const FileManagerPage=require('../page-objects/file-manager.page');
-const utils = require('../utils');
+const utils=require('../utils');
 var chai=require('chai');
 chai.use(require('chai-string'));
+//const {WebTable} = require('../page-objects/webTable')
 
+const fileName='a.txt';
+let fileElement;
 
 describe('File Management Tests', () => {
 	before('set filename element', async () => {
-		const fileName='a.txt';
-		const fileElement=await $(`[title="${fileName}"]`);
+		await FileManagerPage.mainView.waitForDisplayed();
+		fileElement=await $(`[title="${fileName}"]`);
 	})
 
 	it('should create a file', async () => {
-		browser.execute('createFileDialog();');
-		await FileManagerPage.fileName.setValue(file);
+		await browser.execute('createFileDialog();');
+		await FileManagerPage.fileName.setValue(fileName);
 		await FileManagerPage.fileCreateButton.click();
 		await FileManagerPage.textEditorContainer.waitForDisplayed();
 		await FileManagerPage.fileEditorTextArea.addValue('megatesting');
 		await FileManagerPage.saveButton.click();
-		await utils.expect(fileElement, true);
+		await browser.refresh();
+		await fileElement.waitForDisplayed();
+		await utils.expectElement(fileElement, true);
 	});
 
 	it('should delete the file', async () => {
-		await FileManagerPage.fileSettingsIcon.waitForDisplayed();
+		await fileElement.click();
 		await FileManagerPage.fileSettingsIcon.click();
 		await FileManagerPage.removeButton.click();
 		await FileManagerPage.confirmButton.click();
+		await browser.refresh();
 		await utils.expectElement(fileElement, false);
 	});
 
 	it('should restore file from rubbish bin', async () => {
+		await FileManagerPage.rubbishBinButton.waitForDisplay();
 		await FileManagerPage.rubbishBinButton.click();
+		await $('.time.ad').waitForDisplayed();
+		await $('.time.ad').click();
+		await browser.pause(5000);
 		await FileManagerPage.fileContextMenu.click();
-		await FileManagerPage.restoreButton.click();
+		await browser.pause(5000);
+		try {
+			await FileManagerPage.restoreButton.click();
+		} catch (error) {
+			console.log(error);
+			await $('a.dropdown-item.move-item.contains-submenu.sprite-fm-mono-after.icon-arrow-right-after').click();
+			await $('button.mega-button.positive.dialog-picker-button.active').click();
+		}
+
+		await browser.pause(5000);
+		const emptyBinMessage = await FileManagerPage.emptyBinMessage.getText();
+		expect(await emptyBinMessage).to.equal('Empty Cloud Drive');
 		await FileManagerPage.cloudDriveLink.waitForDisplayed();
 		await FileManagerPage.cloudDriveLink.click();
-		await utils.expect(fileElement, true);
+		await utils.expectElement(fileElement, true);
 	});
 });

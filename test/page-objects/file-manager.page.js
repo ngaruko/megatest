@@ -1,4 +1,5 @@
 const Page = require('./page');
+//const WebTable = require('./webTable');
 class FileManagerPage extends Page {
     /**
      * define selectors using getter methods
@@ -13,10 +14,13 @@ class FileManagerPage extends Page {
     get fileSettingsIcon() { return $('span.file-settings-icon') }
     get removeButton() { return $('a.dropdown-item.remove-item') }
     get confirmButton() { return $('.mega-button.positive.confirm') }
-    get rubbishBinButton() { return $('.btn-myfiles.js-lpbtn.rubbish-bin.js-fm-tab.ui-droppable.filled') }
+    get rubbishBinButton() { return $('i.sprite-fm-mono.icon-bin-filled')}
     get fileContextMenu() { return $('a.grid-url-arrow') }
     get restoreButton() { return $('a.dropdown-item.revert-item') }
-    get cloudDriveLink() { return $('.btn-myfiles.js-lpbtn.js-clouddrive-btn.cloud-drive.collapse.active') }
+    get cloudDriveLink() { return $('[data-link="clouddrive"]') }
+    get mainView () { return $('div.fm-blocks-view.fm')}
+    get deletedFileRow () { return $('span=a.text') }
+    get emptyBinMessage () { return $('div.fm-empty-cloud-txt')}
 
     async open() {
         return await super.open('');

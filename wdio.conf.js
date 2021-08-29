@@ -13,7 +13,7 @@ exports.config = {
     browserName: 'chrome',
     acceptInsecureCerts: true,
     'goog:chromeOptions': {
-      args: [ '--disable-gpu']
+      args: [ '--headless', '--disable-gpu']
     }
   }],
 
@@ -48,7 +48,7 @@ exports.config = {
   },
 
   onComplete: function () {
-    utils.logout();
+    //utils.logout();
     const reportError = new Error('Could not generate Allure report');
     const timeoutError = new Error('Timeout generating report');
     const generation = allure(['generate', 'allure-results', '--clean']);
