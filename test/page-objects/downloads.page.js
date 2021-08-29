@@ -12,7 +12,7 @@ class DownloadPage extends Page {
 	get copyIcon() { return $('small-icon.icons-sprite.copy-line-icon.transition') }
 
 	async getDistros() {
-		await this.linuxButton.waitForDisplayed({timeout: 30000});
+		await this.linuxButton.waitForDisplayed();
 		await this.linuxButton.click();
 		await this.versionSelectionDropdown.click();
 		return await $$('.dropdown-scroll.ps-container.ps-theme-default.ps-active-y div.option').map( async (result) => {
@@ -26,7 +26,6 @@ class DownloadPage extends Page {
 		await dist.scrollIntoView();
 		 const dataLink = await dist.getAttribute('data-link');
 		 await dist.click();
-		 await browser.pause(600);
 		 const installationGuide = await this.intallationGuide.getText();
 		await browser.pause(1000);
 		return [dataLink, installationGuide];

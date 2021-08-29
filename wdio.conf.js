@@ -13,14 +13,14 @@ exports.config = {
     browserName: 'chrome',
     acceptInsecureCerts: true,
     'goog:chromeOptions': {
-      args: [ '--headless', '--disable-gpu']
+      args: [ '--disable-gpu']
     }
   }],
 
   logLevel: process.env.LOGLEVEL || 'error',
   bail: 0,
   baseUrl: constants.BASE_URL,
-  waitforTimeout: 15000,
+  waitforTimeout: 30000,
   connectionRetryTimeout: 120000,
   connectionRetryCount: 3,
   framework: 'mocha',

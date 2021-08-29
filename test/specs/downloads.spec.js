@@ -19,15 +19,15 @@ describe('Distros Downloads Tests', () => {
 		for (let distro of distros) {
 			const [ dataLink, installationGuide ]=await DownloadPage.select(distro);
 			//expect datalink
-			console.log(dataLink);
-			console.log(installationGuide);
 			chai.expect(dataLink).to.startWith(`${constants.BASE_URL}linux/MEGAsync/`);
 			//expect installation guide
-			if (distro!=='Arch Linux') {
+			try {
 				chai.expect(installationGuide).to.startWith('sudo');
-				//expect download button enabled
-				chai.expect(await DownloadPage.downloadButton.isExisting()).to.be.true;
+			} catch (error) {
+				chai.expect(installationGuide).to.equal('pacman -U');
 			}
+			//expect download button enabled
+			chai.expect(await DownloadPage.downloadButton.isExisting()).to.be.true;
 		};
 	});
 

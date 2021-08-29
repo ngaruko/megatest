@@ -1,43 +1,40 @@
 const LoginPage=require('../page-objects/login.page');
 const FileManagerPage=require('../page-objects/file-manager.page');
+const utils = require('../utils');
 var chai=require('chai');
 chai.use(require('chai-string'));
-const file='a.txt'
+
 
 describe('File Management Tests', () => {
+	before('set filename element', async () => {
+		const fileName='a.txt';
+		const fileElement=await $(`[title="${fileName}"]`);
+	})
+
 	it('should create a file', async () => {
-		await browser.pause(10000);
 		browser.execute('createFileDialog();');
-		await browser.pause(10000);
 		await FileManagerPage.fileName.setValue(file);
 		await FileManagerPage.fileCreateButton.click();
-		await FileManagerPage.textEditorContainer.waitForDisplayed({ timeout: 30000 });
+		await FileManagerPage.textEditorContainer.waitForDisplayed();
 		await FileManagerPage.fileEditorTextArea.addValue('megatesting');
-		await FileManagerPage.saveButton.click()
-		await browser.pause(10000);;
+		await FileManagerPage.saveButton.click();
+		await utils.expect(fileElement, true);
 	});
 
 	it('should delete the file', async () => {
-		await browser.pause(20000);
+		await FileManagerPage.fileSettingsIcon.waitForDisplayed();
 		await FileManagerPage.fileSettingsIcon.click();
-		await browser.pause(5000);
-		await FileManager.removeButton.click();
-		await FileManager.confirmButton.click();
-		await browser.pause(10000);
-
+		await FileManagerPage.removeButton.click();
+		await FileManagerPage.confirmButton.click();
+		await utils.expectElement(fileElement, false);
 	});
 
 	it('should restore file from rubbish bin', async () => {
 		await FileManagerPage.rubbishBinButton.click();
 		await FileManagerPage.fileContextMenu.click();
 		await FileManagerPage.restoreButton.click();
-
-		await browser.pause(10000);
-
+		await FileManagerPage.cloudDriveLink.waitForDisplayed();
 		await FileManagerPage.cloudDriveLink.click();
-		await browser.pause(5000);
-		const fileName=await $(`[title="${file}"]`);
-		expect(await fileName.isExisting()).to.be.true;
-
+		await utils.expect(fileElement, true);
 	});
 });
