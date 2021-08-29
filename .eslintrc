@@ -1,25 +1,32 @@
 {
-    "parserOptions": {
-      "ecmaVersion": 9
-    },
-    "env": {
-      "jquery": true,
-      "node": true
-    },
-   
-    "rules": {
-      "no-console": "off",
-      "space-before-function-paren": [
-        "error",
-        {
-          "anonymous": "ignore",
-          "named": "ignore",
-          "asyncArrow": "always"
-        }
-      ]
-    },
-    "globals": {
-      "$": true,
-      "$$": true
-    }
+  "extends": "eslint:recommended",
+  "parserOptions": {
+    "ecmaVersion": 9
+  },
+  "env": {
+    "mocha": true,
+    "jquery": true,
+    "node": true,
+    "es6": true
+  },
+  "plugins": [
+    "mocha"
+  ],
+  "rules": {
+    "no-console": "off",
+    "semi-style": ["error", "last"],
+    "space-before-function-paren": [
+      "error",
+      {
+        "anonymous": "ignore",
+        "named": "ignore",
+        "asyncArrow": "always"
+      }
+    ]
+  },
+  "globals": {
+    "browser": true,
+    "$": true,
+    "$$": true
+  }
 }

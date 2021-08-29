@@ -1,5 +1,3 @@
-const LoginPage=require('../page-objects/login.page');
-const FileManagerPage=require('../page-objects/file-manager.page');
 const DownloadPage=require('../page-objects/downloads.page');
 var chai=require('chai');
 const constants=require('../constants');
@@ -28,7 +26,7 @@ describe('Distros Downloads Tests', () => {
 			}
 			//expect download button enabled
 			chai.expect(await DownloadPage.downloadButton.isExisting()).to.be.true;
-		};
+		}
 	});
 
 });

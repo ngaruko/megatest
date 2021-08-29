@@ -1,10 +1,6 @@
-const LoginPage=require('../page-objects/login.page');
 const FileManagerPage=require('../page-objects/file-manager.page');
 const utils=require('../utils');
-var chai=require('chai');
-chai.use(require('chai-string'));
-//const {WebTable} = require('../page-objects/webTable')
-
+const {expect}=require('chai');
 const fileName='a.txt';
 let fileElement;
 
@@ -12,7 +8,7 @@ describe('File Management Tests', () => {
 	before('set filename element', async () => {
 		await FileManagerPage.mainView.waitForDisplayed();
 		fileElement=await $(`[title="${fileName}"]`);
-	})
+	});
 
 	it('should create a file', async () => {
 		await browser.execute('createFileDialog();');

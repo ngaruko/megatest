@@ -5,9 +5,9 @@ const expectElement = async (element, exists) => {
 		expect(await element.isExisting()).to.be.true;
 	}else {
 		expect(await element.isExisting()).to.be.false;
-	};
+	}
 
-}
+};
 module.exports = {
 	expectElement,
-}
+};

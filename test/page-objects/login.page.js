@@ -13,10 +13,10 @@ class LoginPage extends Page {
         await this.inputUsername.setValue(username);
         await this.inputPassword.setValue(password);
         await this.btnSubmit.click();
-    };
+    }
     async logout() {
         await this.open('logout');
-    };
+    }
 }
 
 module.exports=new LoginPage();

@@ -6,8 +6,8 @@ class FileManagerPage extends Page {
      */
     get dialogContainer() { return $('.mega-dialog-container') }
     get body() { return $('#bodyel') }
-    get fileName() { return $('[name="dialog-new-file"]') };
-    get fileCreateButton() { return $('.fm-dialog-new-file-button') };
+    get fileName() { return $('[name="dialog-new-file"]') }
+    get fileCreateButton() { return $('.fm-dialog-new-file-button') }
     get textEditorContainer() { return $('section.text-editor-container') }
     get fileEditorTextArea() { return $('div textarea') }
     get saveButton() { return $('.mega-button.positive.gradient.save-btn') }

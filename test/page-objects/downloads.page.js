@@ -15,21 +15,21 @@ class DownloadPage extends Page {
 		await this.linuxButton.waitForDisplayed();
 		await this.linuxButton.click();
 		await this.versionSelectionDropdown.click();
-		return await $$('.dropdown-scroll.ps-container.ps-theme-default.ps-active-y div.option').map( async (result) => {
+		return await $$('.dropdown-scroll.ps-container.ps-theme-default.ps-active-y div.option').map(async (result) => {
 			return result.getText();
 		});
 	}
 
 	async select(distro) {
 		await this.versionSelectionDropdown.click();
-		const dist = await $(`[data-client="${distro}"]`);
+		const dist=await $(`[data-client="${distro}"]`);
 		await dist.scrollIntoView();
-		 const dataLink = await dist.getAttribute('data-link');
-		 await dist.click();
-		 const installationGuide = await this.intallationGuide.getText();
+		const dataLink=await dist.getAttribute('data-link');
+		await dist.click();
+		const installationGuide=await this.intallationGuide.getText();
 		await browser.pause(1000);
-		return [dataLink, installationGuide];
-	};
+		return [ dataLink, installationGuide ];
+	}
 
 	async open() {
 		return await super.open('sync');
