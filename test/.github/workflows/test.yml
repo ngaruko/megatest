@@ -8,13 +8,14 @@ env:
   MEGA_PASS: ${{ secrets.PASSWORD }}
 
 jobs:
-  wdio-tests:
+  tests:
     name: wdio tests
     runs-on: ubuntu-18.04
     strategy:
       matrix:
         node-version: [12.x]
     steps:
+    - uses: actions/checkout@v2
     - name: npm CI
       run: npm ci
     - name: Test it!
