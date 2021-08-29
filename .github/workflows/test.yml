@@ -19,7 +19,7 @@ jobs:
     - name: npm CI
       run: npm ci
     - name: Test it!
-      run: node --stack_size=10000 npm test
+      run: npm test
     - name: Archive Results
       uses: actions/upload-artifact@v2
       with:
