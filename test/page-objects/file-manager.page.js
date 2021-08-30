@@ -1,5 +1,4 @@
-const Page = require('./page');
-//const WebTable = require('./webTable');
+const Page=require('./page');
 class FileManagerPage extends Page {
     /**
      * define selectors using getter methods
@@ -14,17 +13,42 @@ class FileManagerPage extends Page {
     get fileSettingsIcon() { return $('span.file-settings-icon') }
     get removeButton() { return $('a.dropdown-item.remove-item') }
     get confirmButton() { return $('.mega-button.positive.confirm') }
-    get rubbishBinButton() { return $('i.sprite-fm-mono.icon-bin-filled')}
+    get rubbishBinButton() { return $('[data-link="bin"]') }
     get fileContextMenu() { return $('a.grid-url-arrow') }
     get restoreButton() { return $('a.dropdown-item.revert-item') }
-    get cloudDriveLink() { return $('[data-link="clouddrive"]') }
-    get mainView () { return $('div.fm-blocks-view.fm')}
-    get deletedFileRow () { return $('span=a.text') }
-    get emptyBinMessage () { return $('div.fm-empty-cloud-txt')}
+    get cloudDriveLink() { return $('i.sprite-fm-mono.icon-cloud-drive') }//clicking on some part of > does not open the drive
+    get mainView() { return $('div.fm-blocks-view.fm') }
+    get deletedFileRow() { return $('.time.ad') }
+    get emptyBinMessage() { return $('div.fm-empty-cloud-txt') }
+    get itemMoveLink() { return $('a.dropdown-item.move-item.contains-submenu.sprite-fm-mono-after.icon-arrow-right-after') }
+    get moveButton() { return $('button.mega-button.positive.dialog-picker-button.active') }
+
+
 
     async open() {
-        return await super.open('');
+        await super.open('fm');
+        await this.listContent.waitForDisplayed();
+    }
+
+    async openRubbishBin() {
+        await this.rubbishBinButton.waitForDisplayed();
+        return await this.rubbishBinButton.click();
+    }
+
+    async restoreFile(fileElement) {
+        await this.openRubbishBin();
+        await this.deletedFileRow.click();
+        await this.fileContextMenu.click();
+        try { //this context is sometimes different, maybe depending on the time the file has been deleted
+            await this.restoreButton.click();
+        } catch (error) {
+            this.itemMoveLink.click();
+            await browser.pause(1000);
+            this.moveButton.click();
+        }
+
+        await fileElement.waitForDisplayed({ reverse: true });
     }
 }
 
-module.exports = new FileManagerPage();
+module.exports=new FileManagerPage();

@@ -4,7 +4,7 @@ class DownloadPage extends Page {
 	/**
 	 * define selectors using getter methods
 	 */
-	get linuxButton() { return $('.pages-nav.nav-button.transition.linux') }
+	get linuxButton() { return $('[data-os="linux"]') }
 	get versionSelectionDropdown() { return $('.mega-input.dropdown-input.box-style.inline.megasync-dropdown') }
 	get distrosOptions() { return $$('.option') }
 	get downloadButton() { return $('button.mega-button.positive.transition.megaapp-linux-download.download') }
@@ -14,6 +14,7 @@ class DownloadPage extends Page {
 	async getDistros() {
 		await this.linuxButton.waitForDisplayed();
 		await this.linuxButton.click();
+		await this.versionSelectionDropdown.waitForDisplayed();
 		await this.versionSelectionDropdown.click();
 		return await $$('.dropdown-scroll.ps-container.ps-theme-default.ps-active-y div.option').map(async (result) => {
 			return result.getText();
@@ -32,7 +33,7 @@ class DownloadPage extends Page {
 	}
 
 	async open() {
-		return await super.open('sync');
+		await super.open('sync');
 	}
 }
 

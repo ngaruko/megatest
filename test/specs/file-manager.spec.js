@@ -1,4 +1,5 @@
 const FileManagerPage=require('../page-objects/file-manager.page');
+//const LoginPage=require('../page-objects/login.page');
 const utils=require('../utils');
 const {expect}=require('chai');
 const fileName='a.txt';
@@ -6,7 +7,9 @@ let fileElement;
 
 describe('File Management Tests', () => {
 	before('set filename element', async () => {
-		await FileManagerPage.mainView.waitForDisplayed();
+		//await LoginPage.login();
+		await browser.pause(10000)
+		await FileManagerPage.open();
 		fileElement=await $(`[title="${fileName}"]`);
 	});
 
@@ -32,17 +35,13 @@ describe('File Management Tests', () => {
 	});
 
 	it('should restore file from rubbish bin', async () => {
-		await FileManagerPage.rubbishBinButton.waitForDisplay();
-		await FileManagerPage.rubbishBinButton.click();
-		await $('.time.ad').waitForDisplayed();
-		await $('.time.ad').click();
-		await FileManagerPage.fileContextMenu.click();
-		await FileManagerPage.restoreButton.click();
+		await FileManagerPage.restoreFile(fileElement)
+		expect(await FileManagerPage.emptyBinMessage.getText()).to.equal('Empty Cloud Drive');
+	});
 
-		const emptyBinMessage = await FileManagerPage.emptyBinMessage.getText();
-		expect(await emptyBinMessage).to.equal('Empty Cloud Drive');
-		await FileManagerPage.cloudDriveLink.waitForDisplayed();
-		await FileManagerPage.cloudDriveLink.click();
+	it('check that file was restored', async () => {
+		await FileManagerPage.open();
+		await FileManagerPage.listContent.waitForDisplayed();
 		await utils.expectElement(fileElement, true);
 	});
 });

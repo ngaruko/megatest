@@ -6,7 +6,6 @@ chai.use(require('chai-string'));
 describe('Distros Downloads Tests', () => {
 	before('should go to download page', async () => {
 		await DownloadPage.open();
-		await DownloadPage.acceptCookies();
 	});
 
 	it('check that all distros are downloadable', async () => {
