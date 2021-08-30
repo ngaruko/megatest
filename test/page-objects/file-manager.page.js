@@ -18,7 +18,7 @@ class FileManagerPage extends Page {
     get restoreButton() { return $('a.dropdown-item.revert-item') }
     get cloudDriveLink() { return $('i.sprite-fm-mono.icon-cloud-drive') }//clicking on some part of > does not open the drive
     get mainView() { return $('div.fm-blocks-view.fm') }
-    get deletedFileRow() { return $('.time.ad') }
+    get deletedFileRow() { return $('span.tranfer-filetype-txt:nth-child(2)') }
     get emptyBinMessage() { return $('div.fm-empty-cloud-txt') }
     get itemMoveLink() { return $('a.dropdown-item.move-item.contains-submenu.sprite-fm-mono-after.icon-arrow-right-after') }
     get moveButton() { return $('button.mega-button.positive.dialog-picker-button.active') }
@@ -37,6 +37,7 @@ class FileManagerPage extends Page {
 
     async restoreFile(fileElement) {
         await this.openRubbishBin();
+        await this.deletedFileRow.waitForDisplayed();
         await this.deletedFileRow.click();
         await this.fileContextMenu.click();
         try { //this context is sometimes different, maybe depending on the time the file has been deleted
